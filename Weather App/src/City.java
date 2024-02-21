@@ -1,5 +1,5 @@
 import java.sql.*;
-import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
 
 public class City {
 
@@ -48,6 +48,7 @@ public class City {
     private int currentTemperature;
     private int currentHumidity;
     private int currentWindSpeed;
+    public City(){}
     public City(int cityId,String cityName,int currentTemperature,int currentHumidity,int currentWindSpeed){
           this.cityId=cityId;
           this.cityName=cityName;
@@ -63,19 +64,44 @@ public class City {
         return java.sql.DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
 
-    public static void AddCity()throws SQLException{
+    public static void AddCity(City city)throws SQLException{
 
-        String sql="INSERT INTO weather_app(cityId,cityName,currentTemperature,currentHumidity,currentWindSpeed) values(?,?,?,?,?)";
+        String sql="INSERT INTO city (cityName,currentTemperature,currentHumidity,currentWindSpeed) values(?,?,?,?)";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1,city.cityName);
+        statement.setInt(2,city.currentTemperature);
+        statement.setInt(3,city.currentHumidity);
+        statement.setInt(4,city.currentWindSpeed);
+        statement.executeUpdate();
+        connection.close();
+        statement.close();
         System.out.println("Ville ajoute avec succes");
 
 
     }
+    public static ArrayList<City> ShowCity()throws SQLException{
+        ArrayList<City>villes=new ArrayList<>();
+        String sql="SELECT*FROM city";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet=statement.executeQuery();
+        while (resultSet.next()){
+            int cityId= resultSet.getInt("cityId");
+            String cityName=resultSet.getString("cityName");
+            int currentTemperature=resultSet.getInt("currentTemperature");
+            int currentHumidity=resultSet.getInt("currentHumidity");
+            int currentWindSpeed=resultSet.getInt("currentWindSpeed");
+            villes.add(new City(cityId,cityName,currentTemperature,currentHumidity,currentWindSpeed));
 
-    public static void ShowCity()throws SQLException{
-
+        }
+        return villes;
     }
+
+
+
+
+
 
     public static void UpdateCity()throws SQLException{
 

@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Menu {
     public void ListChoix() throws SQLException {
         int Choix;
+        City city=new City();
 
         do{
             System.out.println("1--Ajouter une ville ");
@@ -18,10 +19,30 @@ public class Menu {
              Choix=new Scanner(System.in).nextInt();
              switch (Choix){
                  case 1:
-                     City.AddCity();
+                     System.out.println("Entrez le nom de la ville :");
+                     city.setCityName(new Scanner(System.in).nextLine());
+                     System.out.println("Entrez la température actuelle");
+                     city.setCurrentTemperature(new Scanner(System.in).nextInt());
+                     System.out.println("Entrez le taux d'humidité actuelle");
+                     city.setCurrentHumidity(new Scanner(System.in).nextInt());
+                     System.out.println("Entrez la vitesse du vent actuelle");
+                     city.setCurrentWindSpeed(new Scanner(System.in).nextInt());
+                     City.AddCity(city);
+
                      break;
                  case 2:
-                     City.ShowCity();
+                     System.out.println("_________________Les villes_____________________ ");
+                     for(City ct : City.ShowCity()){
+                         System.out.println("                                                 ");
+                         System.out.println("id Ville : "+ct.getCityId());
+                         System.out.println("Nom ville : "+ct.getCityName());
+                         System.out.println("Température actuelle : "+ct.getCurrentTemperature());
+                         System.out.println("Taux d'humidité actuelle : "+ct.getCurrentHumidity());
+                         System.out.println("Vitesse du vent actuelle : "+ct.getCurrentWindSpeed());
+                         System.out.println("____________________________________________________");
+
+                     }
+
                      break;
                  case 3:
                      City.UpdateCity();
