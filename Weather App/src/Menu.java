@@ -8,7 +8,6 @@ public class Menu {
         City city=new City();
         CityHistory hCity=new CityHistory();
 
-
         do{
             System.out.println("1--Ajouter une ville ");
             System.out.println("2--Afficher une ville ");
@@ -76,21 +75,20 @@ public class Menu {
                     System.out.println("Entrez la Température historique");
                     hCity.setTemperature(new Scanner(System.in).nextInt());
                     CityHistory.AddHistory(hCity);
-
                     break;
-                 case 6:
-                     System.out.println("_________________Historique des villes_____________________ ");
-                     for(CityHistory hct:CityHistory.ShowHistory()){
-                         System.out.println("                                                 ");
-                         System.out.println("Id Historique : "+hct.getHistoricalDataId());
-                         System.out.println("Id Ville : "+hct.getCityId());
-                         System.out.println("La date de l'événement météorologique historique : "+hct.getEventDate());
-                         System.out.println("La Température historique : "+hct.getTemperature());
+                case 6:
+                    System.out.println("_________________Historique des villes_____________________ ");
+                    for(CityHistory hct:CityHistory.ShowHistory()){
+                        System.out.println("                                                 ");
+                        System.out.println("Id Historique : "+hct.getHistoricalDataId());
+                        System.out.println("Id Ville : "+hct.getCityId());
+                        System.out.println("La date de l'événement météorologique historique : "+hct.getEventDate());
+                        System.out.println("La Température historique : "+hct.getTemperature());
 
-                         System.out.println("____________________________________________________");
+                        System.out.println("____________________________________________________");
 
-                     }
-                     break;
+                    }
+                    break;
                 case 7:
                     System.out.println("Entrez id du ville que vous voullez ajouter");
                     hCity.setCityId(new Scanner(System.in).nextInt());
@@ -106,13 +104,21 @@ public class Menu {
                     hCity.setHistoricalDataId(new Scanner(System.in).nextInt());
                     hCity.DeleteHistory(hCity);
                     break;
-                 case 9:
-                     System.out.println("by by");
-                     break;
-                 default:
-                     System.out.println("Choix invalide ");
+                case 9:
+                    System.out.println("Entrez nom : ");
+                    String name = new Scanner(System.in).nextLine();
+                    City.SearchCity(name);
+                    break;
+                case 10:
+                    System.out.println("Entrez l'id du ville : ");
+                    int Id = new Scanner(System.in).nextInt();
+                    CityHistory.SearchCityHistory(Id);
+                    break;
 
-             }
-        }while(Choix!=9);
+                default:
+                    System.out.println("Choix invalide ");
+
+            }
+        }while(Choix!=11);
     }
 }

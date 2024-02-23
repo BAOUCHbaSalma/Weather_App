@@ -51,16 +51,21 @@ public class CityHistory {
     }
 
     public static void AddHistory(CityHistory hCity)throws SQLException {
-        String sql = "INSERT INTO cityhistory (cityId,eventDate,temperature) values(?,?,?)";
-        Connection connection = City.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, hCity.getCityId());
+        String sql="INSERT INTO cityhistory (cityId,eventDate,temperature) values(?,?,?)";
+        Connection connection=City.getConnection();
+        PreparedStatement statement=connection.prepareStatement(sql);
+        statement.setInt(1,hCity.getCityId());
         statement.setDate(2, Date.valueOf(hCity.getEventDate()));
-        statement.setInt(3, hCity.getTemperature());
+        statement.setInt(3,hCity.getTemperature());
         statement.executeUpdate();
         connection.close();
         statement.close();
         System.out.println("Historique est ajouter avec succes");
+
+
+
+
+
     }
     public static ArrayList<CityHistory> ShowHistory()throws SQLException{
         ArrayList<CityHistory> histoVilles=new ArrayList<>();
@@ -103,6 +108,34 @@ public class CityHistory {
         connection.close();
         statement.close();
         System.out.println("historique est suprimee avec succes");
+
+    }
+    public static void SearchCityHistory(int Id)throws SQLException{
+        String sql = "SELECT ch.historicalDataId, ch.cityId, ch.eventDate, ch.temperature, c.cityName " +
+                "FROM CityHistory ch " +
+                "JOIN City c ON ch.cityId = c.cityId " +
+                "WHERE ch.cityId = ?";
+        Connection connection=City.getConnection();
+        PreparedStatement statement=connection.prepareStatement(sql);
+        statement.setInt(1,Id);
+        ResultSet resultSet=statement.executeQuery();
+        while (resultSet.next()){
+            String name=resultSet.getString("cityName");
+
+            int historicalDataId = resultSet.getInt("historicalDataId");
+
+            int cityId = resultSet.getInt("cityId");
+
+            int temperature = resultSet.getInt("temperature");
+
+            LocalDate eventDate = resultSet.getDate("eventDate").toLocalDate();
+
+
+            System.out.println("Historical Data ID: " + historicalDataId + "\n "+
+                    "\n, City Name: " + name + "\n, Event Date: " + eventDate + "\n, Temperature: " + temperature);
+
+        }
+
 
     }
 
