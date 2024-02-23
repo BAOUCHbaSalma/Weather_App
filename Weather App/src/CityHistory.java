@@ -1,4 +1,6 @@
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CityHistory {
 
@@ -19,11 +21,11 @@ public class CityHistory {
         this.cityId = cityId;
     }
 
-    public int getEventDate() {
+    public LocalDate getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(int eventDate) {
+    public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
     }
 
@@ -36,10 +38,11 @@ public class CityHistory {
     }
     private int historicalDataId;
     private int cityId;
-    private int eventDate;
+    private LocalDate eventDate;
     private int temperature;
 
-    public CityHistory(int historicalDataId,int cityId,int eventDate,int temperature){
+    public CityHistory(){}
+    public CityHistory(int historicalDataId,int cityId,LocalDate eventDate,int temperature){
         this.historicalDataId=historicalDataId;
         this.eventDate=eventDate;
         this.temperature=temperature;
@@ -47,10 +50,17 @@ public class CityHistory {
 
     }
 
-    public static void AddHistory()throws SQLException {
-        City.getConnection();
-
-
+    public static void AddHistory(CityHistory hCity)throws SQLException {
+        String sql = "INSERT INTO cityhistory (cityId,eventDate,temperature) values(?,?,?)";
+        Connection connection = City.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, hCity.getCityId());
+        statement.setDate(2, Date.valueOf(hCity.getEventDate()));
+        statement.setInt(3, hCity.getTemperature());
+        statement.executeUpdate();
+        connection.close();
+        statement.close();
+        System.out.println("Historique est ajouter avec succes");
     }
     public static void ShowHistory(){
 

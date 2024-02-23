@@ -6,6 +6,7 @@ public class Menu {
     public void ListChoix() throws SQLException {
         int Choix;
         City city=new City();
+        CityHistory hCity=new CityHistory();
 
 
         do{
@@ -67,6 +68,15 @@ public class Menu {
                     City.DeleteCity(city);
                     break;
                 case 5:
+                    System.out.println("Entrez id du ville que vous voullez ajouter");
+                    hCity.setCityId(new Scanner(System.in).nextInt());
+                    System.out.println("Entrez la date de l'événement météorologique historique (AAAA-MM-JJ)");
+                    String inputDate = new Scanner(System.in).next();
+                    hCity.setEventDate(LocalDate.parse(inputDate));
+                    System.out.println("Entrez la Température historique");
+                    hCity.setTemperature(new Scanner(System.in).nextInt());
+                    CityHistory.AddHistory(hCity);
+
                     break;
                  case 6:
                      CityHistory.ShowHistory();
