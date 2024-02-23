@@ -79,7 +79,17 @@ public class Menu {
 
                     break;
                  case 6:
-                     CityHistory.ShowHistory();
+                     System.out.println("_________________Historique des villes_____________________ ");
+                     for(CityHistory hct:CityHistory.ShowHistory()){
+                         System.out.println("                                                 ");
+                         System.out.println("Id Historique : "+hct.getHistoricalDataId());
+                         System.out.println("Id Ville : "+hct.getCityId());
+                         System.out.println("La date de l'événement météorologique historique : "+hct.getEventDate());
+                         System.out.println("La Température historique : "+hct.getTemperature());
+
+                         System.out.println("____________________________________________________");
+
+                     }
                      break;
                  case 7:
                      CityHistory.UpdateHistory();

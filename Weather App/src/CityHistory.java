@@ -62,8 +62,23 @@ public class CityHistory {
         statement.close();
         System.out.println("Historique est ajouter avec succes");
     }
-    public static void ShowHistory(){
+    public static ArrayList<CityHistory> ShowHistory()throws SQLException{
+        ArrayList<CityHistory> histoVilles=new ArrayList<>();
+        String sql="SELECT * FROM cityhistory";
+        Connection connection= City.getConnection();
+        PreparedStatement statement=connection.prepareStatement(sql);
+        ResultSet resultSet=statement.executeQuery();
+        while (resultSet.next()){
+            int historicalDataId =resultSet.getInt("historicalDataId");
+            int cityId = resultSet.getInt("cityId");
+            LocalDate eventDate = resultSet.getDate("eventDate").toLocalDate();
+            int temperature = resultSet.getInt("temperature");
+            histoVilles.add(new CityHistory(historicalDataId,cityId,eventDate,temperature));
+        }
+        connection.close();
+        statement.close();
 
+        return histoVilles;
     }
     public static void UpdateHistory(){
 
