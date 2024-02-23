@@ -80,10 +80,29 @@ public class CityHistory {
 
         return histoVilles;
     }
-    public static void UpdateHistory(){
+    public static void UpdateHistory(CityHistory hCity)throws SQLException{
 
+        String sql="UPDATE  city SET cityId = ?, eventDate = ?, temperature =?  WHERE historicalDataId=?";
+        Connection connection= City.getConnection();
+        PreparedStatement statement=connection.prepareStatement(sql);
+        statement.setInt(1,hCity.cityId);
+        statement.setDate(2, Date.valueOf(hCity.eventDate));
+        statement.setInt(3,hCity.temperature);
+        statement.setInt(4,hCity.historicalDataId);
+        statement.executeUpdate();
+        connection.close();
+        statement.close();
+        System.out.println("Ville mise a jour avec succes");
     }
-    public static void DeleteHistory(){
+    public static void DeleteHistory(CityHistory hCity)throws SQLException{
+        String sql="DELETE FROM Ci WHERE cityId=?";
+        Connection connection=City.getConnection();
+        PreparedStatement statement=connection.prepareStatement(sql);
+        statement.setInt(1,hCity.historicalDataId);
+        statement.executeUpdate();
+        connection.close();
+        statement.close();
+        System.out.println("historique est suprimee avec succes");
 
     }
 

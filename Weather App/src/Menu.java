@@ -91,12 +91,21 @@ public class Menu {
 
                      }
                      break;
-                 case 7:
-                     CityHistory.UpdateHistory();
-                     break;
-                 case 8:
-                     CityHistory.DeleteHistory();
-                     break;
+                case 7:
+                    System.out.println("Entrez id du ville que vous voullez ajouter");
+                    hCity.setCityId(new Scanner(System.in).nextInt());
+                    System.out.println("Entrez la date de l'événement météorologique historique (AAAA-MM-JJ)");
+                    String inpuT = new Scanner(System.in).next();
+                    hCity.setEventDate(LocalDate.parse(inpuT));
+                    System.out.println("Entrez la Température historique");
+                    hCity.setTemperature(new Scanner(System.in).nextInt());
+                    CityHistory.UpdateHistory(hCity);
+                    break;
+                case 8:
+                    System.out.println("Entrez id du historique ville que vous voullez supprimer");
+                    hCity.setHistoricalDataId(new Scanner(System.in).nextInt());
+                    hCity.DeleteHistory(hCity);
+                    break;
                  case 9:
                      System.out.println("by by");
                      break;
